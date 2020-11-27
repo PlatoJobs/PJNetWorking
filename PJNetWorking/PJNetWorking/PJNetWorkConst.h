@@ -1,9 +1,13 @@
-# PJNetWorking
-网络请求封装
+//
+//  PJNetWorkConst.h
+//  PJNetWorking
+//
+//  Created by Jobs Plato on 2020/11/26.
+//
 
-#### 自定义的一些`block`和`枚举值`
+#ifndef PJNetWorkConst_h
+#define PJNetWorkConst_h
 
-```objc
 @class PJNetReQuest;
 
 typedef NS_ENUM(NSInteger, PJNetRequestType) {
@@ -55,55 +59,4 @@ typedef void (^PJAgentCompletionHandler) (id _Nullable responseObject, NSError *
 #define PJ_SAFE_BLOCK(BlockName, ...) ({ !BlockName ? nil : BlockName(__VA_ARGS__); })
 
 
-```
-
-##### 主要请求类 
-
-```objc
-
-#import <Foundation/Foundation.h>
-#import "PJNetWorkConst.h"
-#import "PJNetReQuest.h"
-#import "PJSeralRequest.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface PJServerManager : NSObject
-
-
-+ (instancetype)sharePJManager;
-//保存和调用 Block
-- (nullable NSString *)sendRequest:(PJNetRequestConfigBlock)configBlock
-                        onProgress:(nullable PJNetProgressBlock)progressBlock
-                         onSuccess:(nullable PJNetSuccessBlock)successBlock
-                         onFailure:(nullable PJNetFailureBlock)failureBlock;
-
-
-
-- (void)cancelRequest:(NSString *)identifier;
-
-- (void)cancelRequest:(NSString *)identifier
-             onCancel:(nullable PJNetCancelBlock)cancelBlock;
-
-
-
-
-```
-
-
-##### usage
-
-```objc
-
-[[PJServerManager sharePJManager] sendRequest:^(PJNetReQuest *request) {
-    request.pj_netRequestUrl = @"http://v.juhe.cn/toutiao/index";
-    request.methodType = PJServerHTTPMethodGET;
-} onProgress:^(NSProgress *progress) {
-    
-} onSuccess:^(id  _Nullable responseObject) {
-    NSLog(@"responseObject -- %@",responseObject);
-} onFailure:^(NSError * _Nullable error) {
-    NSLog(@"error--- %@,error",error);
-}];
-
-```
+#endif /* PJNetWorkConst_h */
